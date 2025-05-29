@@ -120,6 +120,46 @@ git reset --soft <commit>
 作用效果是版本库回退到指定版本，并保留暂存区和工作区内容。这样你的指定版本之后的多次提交历史将被忽略，但你任拥有最新代码。
 ### 远程仓库基本命令
 ### 分支操作
+#### git merge 和 git rebase
+**git merge**
+ merge 会把两个分支的历史合并在一起，保留所有历史记录，并通常会产生一个新的合并提交（merge commit）。
+ 示例代码：
+```bash
+git checkout main
+git merge feature
+```
+效果：
+```mathematica
+A---B---C (main)
+     \ 
+      D---E (feature)
+
+==>
+
+A---B---C-------M (main)
+     \         /
+      D---E--- (feature)
+```
+
+**git rebase**
+相对于当前分支来说 rebase 会把当前分支的提交挪到目标分支的后面，形成一条线性历史，重写历史。而相对于目标分支来说，没有任何改变发生。
+ 示例代码：
+```bash
+git checkout feature
+git rebase main
+```
+这个操作的意思是：把 feature 分支（D 和 E）的更改，移动到 main 的最新提交 C 后面，就像是从 C 才开始写 D 和 E 一样。效果：
+```mathematica
+A---B---C (main)
+     \ 
+      D---E (feature)
+
+==>
+
+A---B---C (main)
+             \
+              D'---E' (feature)
+```
 ### 标签操作
 
 ## Git-VScode集成操作
